@@ -8,18 +8,18 @@ impl<T> LL<T> {
     }
     fn append(&mut self, data: T) {
         let new_node = Some(Box::new(Node::<T> { data, next: None }));
-        match self.head {
+        match &mut self.head {
             None => self.head = new_node,
             Some(ref mut i) => {
-                let mut node = i;
+                let mut curr_node = i;
                 loop {
-                    match { node }.next {
+                    match curr_node.next {
                         None => {
-                            //node.next = new_node;
+                            curr_node.next = new_node;
                             break;
                         }
                         Some(ref mut j) => {
-                            node = j;
+                            curr_node = j;
                         }
                     }
                 }
@@ -37,5 +37,6 @@ struct Node<T> {
 fn main() {
     let mut yay = LL::<i8>::new();
     yay.append(5);
+    yay.append(7);
     println!("{:?}", yay.head);
 }
